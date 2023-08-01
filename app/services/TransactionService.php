@@ -7,11 +7,12 @@ use App\Models\User;
 
 class TransactionService
 {
-    public function createTransaction(User $user, int $amount): Transaction
+    public function createTransaction(User $user, int $amount, string $description): Transaction
     {
         $transaction = Transaction::create([
             'user_id' => $user->getKey(),
             'amount' => $amount,
+            'description' => $description,
         ]);
 
         $user->balance += $amount;
