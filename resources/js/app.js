@@ -1,9 +1,10 @@
-require('./bootstrap');
+require('./bootstrap')
 
-window.Vue = require('vue').default;
+import { createApp } from 'vue'
+import UserInformation from './components/UserInformation.vue'
 
-// Vue.component('messages', require('./components/admin/Messages.vue').default);
+const app = createApp({})
 
-const app = new Vue({
-    el: '#app',
-});
+app.component('user-information', UserInformation)
+
+app.mount('#app')
