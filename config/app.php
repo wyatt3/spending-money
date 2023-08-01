@@ -231,5 +231,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+    'monthly_allowance' => 50,
 
 ];

@@ -20,7 +20,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
+        'name',
         'password',
+        'balance',
     ];
 
     /**
@@ -31,11 +33,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
-    public function balance(): HasOne
-    {
-        return $this->hasOne(Balance::class);
-    }
 
     public function transactions(): HasMany
     {

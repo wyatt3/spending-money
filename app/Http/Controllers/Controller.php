@@ -14,7 +14,7 @@ class Controller extends BaseController
 
     public function index()
     {
-        $users = User::with('balance')->get();
+        $users = User::orderBy('name')->get();
         return view('index', ['users' => $users]);
     }
 }

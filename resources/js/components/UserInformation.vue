@@ -22,7 +22,6 @@ export default {
   },
   created() {
     this.setActiveUser(this.loggedInUser.id);
-    console.log(this.users);
   },
 };
 </script>
