@@ -21,9 +21,16 @@
             <button
               class="w-100 btn btn-dark mb-2"
               v-if="user.id == logged_in_user.id"
+              @click="open = true"
             >
               Add transaction
             </button>
+            <add-transaction
+              :open="open"
+              @closed="closeModal"
+              @created="handleCreatedTransaction"
+              :user="user"
+            ></add-transaction>
             <user-transactions
               @deleted="handleDeletedTransaction"
               :transactions="transactions[user.id]"
@@ -38,14 +45,17 @@
 <script>
 import axios from "axios";
 import UserTransactions from "./UserTransactions.vue";
+import AddTransaction from "./AddTransaction.vue";
 export default {
   props: ["users", "logged_in_user"],
   components: {
     UserTransactions,
+    AddTransaction,
   },
   data() {
     return {
       activeUser: null,
+      open: false,
       transactions: [],
     };
   },
@@ -59,12 +69,18 @@ export default {
         currency: "USD",
       });
     },
+    handleCreatedTransaction(e) {
+      this.transactions[e.user_id].unshift(e);
+      this.users.find((u) => u.id === e.user_id).balance += e.amount;
+    },
     handleDeletedTransaction(e) {
-      console.log(e);
       this.transactions[e.user_id] = this.transactions[e.user_id].filter(
         (t) => t.id !== e.id
       );
       this.users.find((u) => u.id === e.user_id).balance -= e.amount;
+    },
+    closeModal() {
+      this.open = false;
     },
   },
   created() {

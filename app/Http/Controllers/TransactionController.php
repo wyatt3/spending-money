@@ -17,7 +17,7 @@ class TransactionController extends Controller
      */
     public function getTransactions(Request $request): \Illuminate\Http\JsonResponse
     {
-        return response()->json(Transaction::all()->groupBy('user_id'));
+        return response()->json(Transaction::orderBy('created_at', 'DESC')->get()->groupBy('user_id'));
     }
 
     /**
@@ -33,7 +33,7 @@ class TransactionController extends Controller
             'description' => 'required|string',
         ]);
 
-        return TransactionService::createTransaction(Auth::user(), $request->amount, $request->description);
+        return response()->json(TransactionService::createTransaction(Auth::user(), $request->amount, $request->description));
     }
 
     /**
