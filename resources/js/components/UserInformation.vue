@@ -3,7 +3,9 @@
     <!-- User names -->
     <div class="d-flex justify-content-evenly">
       <div v-for="user in users" :key="user.id">
-        <button @click="setActiveUser(user.id)">{{ user.name }}</button>
+        <button @click="setActiveUser(user.id)">
+          {{ user.name }}
+        </button>
       </div>
     </div>
     <!-- User balances and transactions -->
@@ -11,9 +13,19 @@
       <div v-for="user in users" :key="user.id" class="user-info">
         <transition name="fade">
           <div v-if="user.id == activeUser" class="container">
-            <h2 v-text="format(user.balance)"></h2>
-            <div v-if="user.id == logged_in_user.id">Add transaction</div>
+            <p class="m-auto text-center mt-3">Current Balance:</p>
+            <h2
+              class="m-auto text-center mb-3"
+              v-text="format(user.balance)"
+            ></h2>
+            <button
+              class="w-100 btn btn-dark mb-2"
+              v-if="user.id == logged_in_user.id"
+            >
+              Add transaction
+            </button>
             <user-transactions
+              @deleted="handleDeletedTransaction"
               :transactions="transactions[user.id]"
             ></user-transactions>
           </div>
@@ -47,11 +59,17 @@ export default {
         currency: "USD",
       });
     },
+    handleDeletedTransaction(e) {
+      console.log(e);
+      this.transactions[e.user_id] = this.transactions[e.user_id].filter(
+        (t) => t.id !== e.id
+      );
+      this.users.find((u) => u.id === e.user_id).balance -= e.amount;
+    },
   },
   created() {
     axios.get("/api/transactions").then((response) => {
       this.transactions = response.data;
-      console.log(response.data);
     });
     this.setActiveUser(this.logged_in_user.id);
   },

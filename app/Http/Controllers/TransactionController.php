@@ -9,12 +9,24 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
-    public function getTransactions(Request $request)
+    /**
+     * Get all transactions grouped by user.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTransactions(Request $request): \Illuminate\Http\JsonResponse
     {
         return response()->json(Transaction::all()->groupBy('user_id'));
     }
 
-    public function addTransaction(Request $request)
+    /**
+     * Add a new transaction.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addTransaction(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'amount' => 'required|numeric',
@@ -24,15 +36,19 @@ class TransactionController extends Controller
         return TransactionService::createTransaction(Auth::user(), $request->amount, $request->description);
     }
 
-    public function deleteTransaction(Request $request)
+    /**
+     * Delete a transaction.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteTransaction(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'id' => 'required|numeric|exists:transactions,id',
         ]);
 
-        $transaction = Transaction::find($request->id);
-
-        TransactionService::deleteTransaction($transaction);
+        $transaction = TransactionService::deleteTransaction(Transaction::find($request->id));
 
         return response()->json($transaction);
     }

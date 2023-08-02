@@ -7,6 +7,14 @@ use App\Models\User;
 
 class TransactionService
 {
+    /**
+     * Create a new transaction and update the user's balance.
+     *
+     * @param User $user
+     * @param integer $amount
+     * @param string $description
+     * @return Transaction
+     */
     public function createTransaction(User $user, int $amount, string $description): Transaction
     {
         $transaction = Transaction::create([
@@ -21,12 +29,19 @@ class TransactionService
         return $transaction;
     }
 
-    public function deleteTransaction(Transaction $transaction): void
+    /**
+     * Delete a transaction and update the user's balance.
+     *
+     * @param Transaction $transaction
+     * @return Transaction
+     */
+    public function deleteTransaction(Transaction $transaction): Transaction
     {
         $user = $transaction->user;
         $user->balance -= $transaction->amount;
         $user->save();
 
         $transaction->delete();
+        return $transaction;
     }
 }

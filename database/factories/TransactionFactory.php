@@ -15,7 +15,7 @@ class TransactionFactory extends Factory
     public function definition()
     {
         return [
-            'amount' => $this->faker->randomFloat(2, 1, 100),
+            'amount' => $this->faker->randomFloat(2, -100, 100),
             'description' => $this->faker->sentence,
             'user_id' => User::factory(),
         ];
