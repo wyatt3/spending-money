@@ -18875,10 +18875,12 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/transactions", {
-        amount: -this.amount,
+        amount: -Math.abs(this.amount),
         description: this.description,
         user_id: this.user.id
       }).then(function (response) {
+        _this.amount = null;
+        _this.description = "";
         _this.$emit("created", response.data);
         _this.$emit("closed");
       });
@@ -19128,8 +19130,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
         return $options.setActiveUser(user.id);
-      }
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.name), 9 /* TEXT, PROPS */, _hoisted_2)]);
+      },
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-dark user-button", {
+        active: user.id == $data.activeUser
+      }])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.name), 11 /* TEXT, CLASS, PROPS */, _hoisted_2)]);
   }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" User balances and transactions "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.users, function (user) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: user.id,
@@ -19296,7 +19301,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.anchor[data-v-540f6846] {\n  position: relative;\n}\n.user-info[data-v-540f6846] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n}\n.fade-enter-active[data-v-540f6846],\n.fade-leave-active[data-v-540f6846] {\n  transition: opacity 0.3s;\n}\n.fade-enter-to[data-v-540f6846],\n.fade-leave-from[data-v-540f6846] {\n  opacity: 1;\n}\n.fade-enter-from[data-v-540f6846],\n.fade-leave-to[data-v-540f6846] {\n  opacity: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.anchor[data-v-540f6846] {\n  position: relative;\n}\n.user-info[data-v-540f6846] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n}\n.user-button.active[data-v-540f6846] {\n  background-color: #518a56;\n}\n.fade-enter-active[data-v-540f6846],\n.fade-leave-active[data-v-540f6846] {\n  transition: opacity 0.3s;\n}\n.fade-enter-to[data-v-540f6846],\n.fade-leave-from[data-v-540f6846] {\n  opacity: 1;\n}\n.fade-enter-from[data-v-540f6846],\n.fade-leave-to[data-v-540f6846] {\n  opacity: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

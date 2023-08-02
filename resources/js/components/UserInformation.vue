@@ -3,7 +3,11 @@
     <!-- User names -->
     <div class="d-flex justify-content-evenly">
       <div v-for="user in users" :key="user.id">
-        <button @click="setActiveUser(user.id)">
+        <button
+          @click="setActiveUser(user.id)"
+          class="btn btn-dark user-button"
+          :class="{ active: user.id == activeUser }"
+        >
           {{ user.name }}
         </button>
       </div>
@@ -102,6 +106,10 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+}
+
+.user-button.active {
+  background-color: #518a56;
 }
 
 .fade-enter-active,

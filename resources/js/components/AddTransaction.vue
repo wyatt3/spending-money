@@ -46,11 +46,13 @@ export default {
     submit() {
       axios
         .post("/api/transactions", {
-          amount: -this.amount,
+          amount: -Math.abs(this.amount),
           description: this.description,
           user_id: this.user.id,
         })
         .then((response) => {
+          this.amount = null;
+          this.description = "";
           this.$emit("created", response.data);
           this.$emit("closed");
         });
