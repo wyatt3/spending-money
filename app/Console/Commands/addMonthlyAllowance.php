@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -40,6 +41,11 @@ class addMonthlyAllowance extends Command
     {
         $users = User::all();
         $users->each(function ($user) {
+            Transaction::create([
+                'user_id' => $user->id,
+                'amount' => config('app.monthly_allowance'),
+                'description' => 'Monthly allowance',
+            ]);
             $user->balance += config('app.monthly_allowance');
             $user->save();
         });
