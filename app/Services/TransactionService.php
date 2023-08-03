@@ -15,7 +15,7 @@ class TransactionService
      * @param string $description
      * @return Transaction
      */
-    public function createTransaction(User $user, int $amount, string $description): Transaction
+    public function createTransaction(User $user, float $amount, string $description): Transaction
     {
         $transaction = Transaction::create([
             'user_id' => $user->getKey(),
