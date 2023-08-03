@@ -18874,8 +18874,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     submit: function submit() {
       var _this = this;
+      if (this.amount < 0) {
+        this.amount = -this.amount;
+      }
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/transactions", {
-        amount: -Math.abs(this.amount),
+        amount: -this.amount,
         description: this.description,
         user_id: this.user.id
       }).then(function (response) {

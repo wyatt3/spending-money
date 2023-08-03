@@ -44,9 +44,12 @@ export default {
   },
   methods: {
     submit() {
+      if (this.amount < 0) {
+        this.amount = -this.amount;
+      }
       axios
         .post("/api/transactions", {
-          amount: -Math.abs(this.amount),
+          amount: -this.amount,
           description: this.description,
           user_id: this.user.id,
         })
