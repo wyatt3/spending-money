@@ -8,7 +8,7 @@ use App\Models\User;
 class TransactionService
 {
     /**
-     * Create a new transaction and update the user's balance.
+     * Create a new transaction.
      *
      * @param User $user
      * @param integer $amount
@@ -23,24 +23,17 @@ class TransactionService
             'description' => $description,
         ]);
 
-        $user->balance += $amount;
-        $user->save();
-
         return $transaction;
     }
 
     /**
-     * Delete a transaction and update the user's balance.
+     * Delete a transaction.
      *
      * @param Transaction $transaction
      * @return Transaction
      */
     public function deleteTransaction(Transaction $transaction): Transaction
     {
-        $user = $transaction->user;
-        $user->balance -= $transaction->amount;
-        $user->save();
-
         $transaction->delete();
         return $transaction;
     }
