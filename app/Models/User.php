@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $appends = ['balance'];
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +22,6 @@ class User extends Authenticatable
         'username',
         'name',
         'password',
-        'balance',
     ];
 
     /**
@@ -36,5 +36,10 @@ class User extends Authenticatable
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function getBalanceAttribute(): float
+    {
+        return $this->transactions()->sum('amount');
     }
 }
