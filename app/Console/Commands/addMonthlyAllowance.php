@@ -46,7 +46,6 @@ class addMonthlyAllowance extends Command
                 'amount' => config('app.monthly_allowance'),
                 'description' => 'Monthly allowance',
             ]);
-            $user->balance += config('app.monthly_allowance');
             $user->save();
         });
         return 0;
